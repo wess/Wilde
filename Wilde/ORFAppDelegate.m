@@ -7,13 +7,21 @@
 //
 
 #import "ORFAppDelegate.h"
+#import "ORFTestView.h"
 
 @implementation ORFAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+
+    
+    ORFTestView *testView = [[ORFTestView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 200.0f)];
+    
+    UIViewController *controller = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+    [controller.view addSubview:testView];
+    
+    self.window.rootViewController = controller;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

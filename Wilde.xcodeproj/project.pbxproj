@@ -16,6 +16,14 @@
 		080021A01663C1C100D18BD6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0800219F1663C1C100D18BD6 /* Default.png */; };
 		080021A21663C1C100D18BD6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021A11663C1C100D18BD6 /* Default@2x.png */; };
 		080021A41663C1C100D18BD6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021A31663C1C100D18BD6 /* Default-568h@2x.png */; };
+		080021AC1663C1EC00D18BD6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080021AA1663C1EC00D18BD6 /* CoreText.framework */; };
+		080021AD1663C1EC00D18BD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080021AB1663C1EC00D18BD6 /* QuartzCore.framework */; };
+		080021B21663C2B100D18BD6 /* Wilde.m in Sources */ = {isa = PBXBuildFile; fileRef = 080021B11663C2B100D18BD6 /* Wilde.m */; };
+		080021B91663DBC900D18BD6 /* ORFTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 080021B81663DBC900D18BD6 /* ORFTestView.m */; };
+		080021BE1663DEA200D18BD6 /* 09-chat-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021BC1663DEA200D18BD6 /* 09-chat-2.png */; };
+		080021BF1663DEA200D18BD6 /* 09-chat-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021BD1663DEA200D18BD6 /* 09-chat-2@2x.png */; };
+		080021C21663E06600D18BD6 /* 92-test-tube.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021C01663E06600D18BD6 /* 92-test-tube.png */; };
+		080021C31663E06600D18BD6 /* 92-test-tube@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021C11663E06600D18BD6 /* 92-test-tube@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +40,16 @@
 		0800219F1663C1C100D18BD6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		080021A11663C1C100D18BD6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		080021A31663C1C100D18BD6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		080021AA1663C1EC00D18BD6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		080021AB1663C1EC00D18BD6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		080021B01663C2B100D18BD6 /* Wilde.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wilde.h; sourceTree = "<group>"; };
+		080021B11663C2B100D18BD6 /* Wilde.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wilde.m; sourceTree = "<group>"; };
+		080021B71663DBC900D18BD6 /* ORFTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ORFTestView.h; sourceTree = "<group>"; };
+		080021B81663DBC900D18BD6 /* ORFTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ORFTestView.m; sourceTree = "<group>"; };
+		080021BC1663DEA200D18BD6 /* 09-chat-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-chat-2.png"; sourceTree = "<group>"; };
+		080021BD1663DEA200D18BD6 /* 09-chat-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-chat-2@2x.png"; sourceTree = "<group>"; };
+		080021C01663E06600D18BD6 /* 92-test-tube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "92-test-tube.png"; sourceTree = "<group>"; };
+		080021C11663E06600D18BD6 /* 92-test-tube@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "92-test-tube@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				080021AC1663C1EC00D18BD6 /* CoreText.framework in Frameworks */,
+				080021AD1663C1EC00D18BD6 /* QuartzCore.framework in Frameworks */,
 				0800218E1663C1C100D18BD6 /* UIKit.framework in Frameworks */,
 				080021901663C1C100D18BD6 /* Foundation.framework in Frameworks */,
 				080021921663C1C100D18BD6 /* CoreGraphics.framework in Frameworks */,
@@ -68,6 +88,8 @@
 		0800218C1663C1C100D18BD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				080021AA1663C1EC00D18BD6 /* CoreText.framework */,
+				080021AB1663C1EC00D18BD6 /* QuartzCore.framework */,
 				0800218D1663C1C100D18BD6 /* UIKit.framework */,
 				0800218F1663C1C100D18BD6 /* Foundation.framework */,
 				080021911663C1C100D18BD6 /* CoreGraphics.framework */,
@@ -78,8 +100,9 @@
 		080021931663C1C100D18BD6 /* Wilde */ = {
 			isa = PBXGroup;
 			children = (
-				0800219C1663C1C100D18BD6 /* ORFAppDelegate.h */,
-				0800219D1663C1C100D18BD6 /* ORFAppDelegate.m */,
+				080021AF1663C24400D18BD6 /* src */,
+				080021B61663DBAE00D18BD6 /* Views */,
+				080021AE1663C21100D18BD6 /* Delegate */,
 				080021941663C1C100D18BD6 /* Supporting Files */,
 			);
 			path = Wilde;
@@ -88,6 +111,10 @@
 		080021941663C1C100D18BD6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				080021C01663E06600D18BD6 /* 92-test-tube.png */,
+				080021C11663E06600D18BD6 /* 92-test-tube@2x.png */,
+				080021BC1663DEA200D18BD6 /* 09-chat-2.png */,
+				080021BD1663DEA200D18BD6 /* 09-chat-2@2x.png */,
 				080021951663C1C100D18BD6 /* Wilde-Info.plist */,
 				080021961663C1C100D18BD6 /* InfoPlist.strings */,
 				080021991663C1C100D18BD6 /* main.m */,
@@ -97,6 +124,33 @@
 				080021A31663C1C100D18BD6 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		080021AE1663C21100D18BD6 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				0800219C1663C1C100D18BD6 /* ORFAppDelegate.h */,
+				0800219D1663C1C100D18BD6 /* ORFAppDelegate.m */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		080021AF1663C24400D18BD6 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				080021B01663C2B100D18BD6 /* Wilde.h */,
+				080021B11663C2B100D18BD6 /* Wilde.m */,
+			);
+			path = src;
+			sourceTree = SOURCE_ROOT;
+		};
+		080021B61663DBAE00D18BD6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				080021B71663DBC900D18BD6 /* ORFTestView.h */,
+				080021B81663DBC900D18BD6 /* ORFTestView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +209,10 @@
 				080021A01663C1C100D18BD6 /* Default.png in Resources */,
 				080021A21663C1C100D18BD6 /* Default@2x.png in Resources */,
 				080021A41663C1C100D18BD6 /* Default-568h@2x.png in Resources */,
+				080021BE1663DEA200D18BD6 /* 09-chat-2.png in Resources */,
+				080021BF1663DEA200D18BD6 /* 09-chat-2@2x.png in Resources */,
+				080021C21663E06600D18BD6 /* 92-test-tube.png in Resources */,
+				080021C31663E06600D18BD6 /* 92-test-tube@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +225,8 @@
 			files = (
 				0800219A1663C1C100D18BD6 /* main.m in Sources */,
 				0800219E1663C1C100D18BD6 /* ORFAppDelegate.m in Sources */,
+				080021B21663C2B100D18BD6 /* Wilde.m in Sources */,
+				080021B91663DBC900D18BD6 /* ORFTestView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
