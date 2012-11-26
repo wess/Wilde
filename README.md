@@ -85,6 +85,11 @@ for a working example of building out your text stack.
 ## License
 Read LICENSE file for more info.
 
+
+## Special Thanks
+* Thanks to Jeremy Tregunna for helping with CoreText for a while now, and proof reading all the things.
+* Thanks to Erica Sadun for writing awesome books and helping me out with getting CoreText under control.
+
 ## What is this ORF prefix?
 ORF is the prefix for an upcoming typesetting framework currently underdevelopment, called Orwell.  Once Orwell is in a place, this
 class will be merged into it.
