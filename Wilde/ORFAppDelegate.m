@@ -16,7 +16,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     
-    ORFTestView *testView = [[ORFTestView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 200.0f)];
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    ORFTestView *testView = [[ORFTestView alloc] initWithFrame:screenBounds];
     
     UIViewController *controller = [[UIViewController alloc] initWithNibName:nil bundle:nil];
     [controller.view addSubview:testView];

@@ -7,6 +7,30 @@
 //
 
 #import "Wilde.h"
+#import "TFHpple.h"
+#import "Archimedes.h"
+
+@implementation WildeLinkAttribute
+- (id)initWithText:(NSString *)text urlString:(NSString *)urlString andRange:(NSRange)range
+{
+    self = [super init];
+    if(self)
+    {
+        _text       = [text copy];
+        _urlString  = [urlString copy];
+        _url        = [NSURL URLWithString:_urlString];
+        _textRange  = range;
+        
+    }
+    return self;
+}
++ (WildeLinkAttribute *)createLinkWithText:(NSString *)text urlString:(NSString *)urlString andRange:(NSRange)range
+{
+    WildeLinkAttribute *this = [[WildeLinkAttribute alloc] initWithText:text urlString:urlString andRange:range];
+    return this;
+}
+
+@end
 
 #pragma mark - Callback Functions for Image RunDelegate -
 void ORFImageRunDelegateDeallocCallback(void *reference)
@@ -52,10 +76,30 @@ CGFloat ORFViewRunDelegateWidthCallback(void *reference)
     return image.size.width - 4.0f;
 }
 
-static NSString *kORFImageAttributeName = @"kORFImageAttributeName";
-static NSString *kORFViewAttributeName  = @"kORFViewAttributeName";
+
+static NSString *stringByStrippingHTML(NSString *string)
+{
+    NSScanner *thescanner   = [NSScanner scannerWithString:string];
+    NSString *text          = nil;
+    
+    while (![thescanner isAtEnd])
+    {
+		[thescanner scanUpToString:@"<" intoString:NULL];
+		[thescanner scanUpToString:@">" intoString:&text];
+		
+        string = [string stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@" "];
+    }
+	return string;
+}
 
 @interface Wilde()
+{
+    CTFrameRef _drawingFrameRef;
+}
+@property (readwrite, nonatomic) CGRect drawingFrame;
+@property (strong, nonatomic) NSMutableDictionary *mutableLinks;
+@property (strong, nonatomic) NSMutableArray *lines;
+- (NSAttributedString *)attributedStringByAppendingString:(NSString *)string;
 - (void)drawImagesForFrame:(CTFrameRef)frame;
 @end
 
@@ -66,16 +110,25 @@ static NSString *kORFViewAttributeName  = @"kORFViewAttributeName";
     self = [super init];
     if(self)
     {
-        _attributedString   = [[NSMutableAttributedString alloc] init];
-        _paragraphStyle     = [[NSMutableParagraphStyle alloc] init];
-        _font               = [UIFont systemFontOfSize:12.0f];
-        _lineHeight         = _font.pointSize * 1.5f;
-        _foregroundColor    = [UIColor blackColor];
-        _strokeWidth        = 0.0f;
-        _strokeColor        = [UIColor clearColor];
-        _shadowColor        = [UIColor clearColor];
-        _shadowOffset       = CGSizeZero;
-        _shadowRadius       = 0.0f;
+        _drawingFrameRef    = NULL;
+        self.mutableLinks   = [[NSMutableDictionary alloc] init];
+        self.lines          = [[NSMutableArray alloc] init];
+        
+        _attributedString       = [[NSMutableAttributedString alloc] init];
+        _paragraphStyle         = [[NSMutableParagraphStyle alloc] init];
+        _font                   = [UIFont systemFontOfSize:12.0f];
+        _boldFont               = [UIFont boldSystemFontOfSize:12.0f];
+        _italicFont             = [UIFont fontWithName:@"Helvetica-Oblique" size:12.0f];
+        _headlineFont           = [UIFont boldSystemFontOfSize:16.0f];
+        _lineHeight             = _font.pointSize * 1.5f;
+        _foregroundColor        = [UIColor blackColor];
+        _strokeWidth            = 0.0f;
+        _strokeColor            = [UIColor clearColor];
+        _shadowColor            = [UIColor clearColor];
+        _shadowOffset           = CGSizeZero;
+        _shadowRadius           = 0.0f;
+        _listBulletCharacter    = kWildBulletCharacter;
+        _listItemIndent         = 4;
     }
     return self;
 }
@@ -103,6 +156,74 @@ static NSString *kORFViewAttributeName  = @"kORFViewAttributeName";
     };
 }
 
+- (NSAttributedString *)attributedStringByAppendingString:(NSString *)string
+{
+    NSString *content                                   = [string copy];
+    NSMutableAttributedString *mutableAttributedString  = [[NSMutableAttributedString alloc] initWithString:content attributes:self.attributes];
+    TFHpple *doc                                        = [[TFHpple alloc] initWithHTMLData:[[[content copy] lowercaseString] dataUsingEncoding:NSUTF8StringEncoding]];
+    NSArray *elements                                   = [doc searchWithXPathQuery:@"//b | //strong | //i | //em | //ul | //li | //a"];
+    
+    [elements enumerateObjectsUsingBlock:^(TFHppleElement *element, NSUInteger idx, BOOL *stop) {
+        NSString *tagName = [element.tagName lowercaseString];
+        
+        if(element.text)
+        {
+            NSRange textRange = [[content lowercaseString] rangeOfString:[element.text lowercaseString]];
+    
+            if([tagName isEqualToString:@"b"] || [tagName isEqualToString:@"strong"])
+            {
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:self.boldFont.fontName size:self.font.pointSize] range:textRange];
+            }
+            else if([tagName isEqualToString:@"i"] || [tagName isEqualToString:@"em"])
+            {
+                [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:self.italicFont.fontName size:self.font.pointSize] range:textRange];
+            }
+            else if([tagName isEqualToString:@"a"])
+            {
+                WildeLinkAttribute *linkAttribute = [WildeLinkAttribute createLinkWithText:element.text urlString:element.attributes[@"href"] andRange:textRange];
+                [self.mutableLinks setObject:linkAttribute forKey:element.text];
+                
+                [mutableAttributedString addAttribute:NSUnderlineStyleAttributeName value:@(1) range:textRange];
+                [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:textRange];
+                [mutableAttributedString addAttribute:kORFLinkAttributeName value:element.attributes[@"href"] range:textRange];
+            }
+        }
+    }];
+
+    NSScanner *thescanner   = [NSScanner scannerWithString:mutableAttributedString.mutableString];
+    NSString *text          = nil;
+    
+    while (![thescanner isAtEnd])
+    {
+		[thescanner scanUpToString:@"<" intoString:NULL];
+		[thescanner scanUpToString:@">" intoString:&text];
+
+        NSString *replaceString = [NSString stringWithFormat:@"%@>", text];
+        
+        if(([[text lowercaseString] rangeOfString:@"br"].location != NSNotFound) ||
+           ([[text lowercaseString] rangeOfString:@"ul"].location != NSNotFound) ||
+           ([[text lowercaseString] rangeOfString:@"/li"].location != NSNotFound))
+        {
+            [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"\n" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
+        }
+        else if([[text lowercaseString] rangeOfString:@"/p"].location != NSNotFound)
+        {
+            [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"\r\n" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
+        }
+        if([[text lowercaseString] rangeOfString:@"<li"].location != NSNotFound)
+        {
+            NSString *listBullet = [[@"" stringByPaddingToLength:(self.listItemIndent * (@" ").length) withString:@" " startingAtIndex:0] stringByAppendingString:kWildBulletCharacter];
+            [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:listBullet options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
+        }
+        
+        
+        [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
+    }
+
+    
+    return [mutableAttributedString copy];
+}
+
 - (void)appendStringWithFormat:(NSString *)string, ...
 {
     if(!string)
@@ -113,7 +234,7 @@ static NSString *kORFViewAttributeName  = @"kORFViewAttributeName";
     NSString *output = [[NSString alloc] initWithFormat:string arguments:args];
     va_end(args);
     
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:output attributes:self.attributes];
+    NSAttributedString *attributedString = [self attributedStringByAppendingString:output];
     
     [self.attributedString appendAttributedString:attributedString];
 }
@@ -260,14 +381,112 @@ static NSString *kORFViewAttributeName  = @"kORFViewAttributeName";
     CGContextSaveGState(context);
     CGContextConcatCTM(context, CGAffineTransformMake(1.0f, 0.0f, 0.0f, -1.0f, 0.0f, (rect.origin.y + rect.size.height)));
 
-    [self drawImagesForFrame:frameRef];
-    [self drawViewsForFrame:frameRef];
+//    [self drawImagesForFrame:frameRef];
+//    [self drawViewsForFrame:frameRef];
+//
+//    
+    CTFrameDraw(frameRef, context);
+//    CGContextRestoreGState(context);
+//    
+//    CFRelease(path);
+//    CFRelease(frameRef);
+//    
+//    self.drawingFrame = rect;
+//    _drawingFrameRef = frameRef;
+
+    CGRect frameBoundingBox = CGPathGetBoundingBox(path);
+    CFArrayRef lines = CTFrameGetLines(frameRef);
+    CGPoint origins[CFArrayGetCount(lines)];                              // the origins of each line at the baseline
+    CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
+    CFIndex linesCount = CFArrayGetCount(lines);
+    
+    for (int lineIdx = 0; lineIdx < linesCount; lineIdx++)
+    {
+        CGContextSetTextPosition(context, origins[lineIdx].x + frameBoundingBox.origin.x, frameBoundingBox.origin.y + origins[lineIdx].y);
+
+        CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, lineIdx);
+        CGRect lineBounds = CTLineGetImageBounds(line, context);
+        
+        lineBounds.origin.y = rect.size.height - origins[lineIdx].y - lineBounds.size.height;
+        
+        CFArrayRef runs = CTLineGetGlyphRuns(line);
+        for(int r = 0; r < CFArrayGetCount(runs); r++)
+        {
+            CTRunRef run        = CFArrayGetValueAtIndex(runs, r);
+            CFRange runRange    = CTRunGetStringRange(run);
+
+            CGFloat ascent, descent;
+            CGFloat width   = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
+            CGFloat height  = ascent + descent + 2.0f;
+            CGFloat xOffset = CTLineGetOffsetForStringIndex(line, runRange.location, NULL);
+            CGFloat yOffset = origins[lineIdx].y - descent;
+            CGRect bounds   = CGRectMake(xOffset, yOffset, width, height);
+  
+//            UIColor *randomColor = [UIColor colorWithRed:((CGFloat)random()/(CGFloat)RAND_MAX) green:((CGFloat)random()/(CGFloat)RAND_MAX) blue:((CGFloat)random()/(CGFloat)RAND_MAX) alpha:1.0f];
+//            [randomColor set];
+//            UIRectFill(bounds);
+            
+            bounds = CGRectInvert(frame, bounds);
+            
+            [self.lines addObject:@{
+                @"Range": NSStringFromRange(NSMakeRange(runRange.location, runRange.length)),
+                @"Bounds": NSStringFromCGRect(bounds)
+             }];            
+        }
+    }
     
     CTFrameDraw(frameRef, context);
-    CGContextRestoreGState(context);
+
+}
+
+- (NSString *)urlStringForTextAtPoint:(CGPoint)point
+{
+    __block NSString *link = nil;
     
-    CFRelease(path);
-    CFRelease(frameRef);
+    [self.lines enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
+        NSString *boundsString  = [item objectForKey:@"Bounds"];
+        NSString *rangeString   = [item objectForKey:@"Range"];
+        CGRect bounds           = CGRectFromString(boundsString);
+        NSRange range           = NSRangeFromString(rangeString);
+
+
+        if(CGRectContainsPoint(bounds, point))
+        {
+            NSRange longRange;
+            NSInteger count = range.location + range.length;
+            for(int i = range.location; i < count; i++)
+            {
+                NSDictionary *attributes    = [self.attributedString attributesAtIndex:i longestEffectiveRange:&longRange inRange:NSMakeRange(i, 1)];
+//                NSString *linkAttr          = [self.attributedString attribute:kORFLinkAttributeName atIndex:i effectiveRange:NULL];
+
+                if([attributes objectForKey:kORFLinkAttributeName])
+                {
+                    link = [[attributes objectForKey:kORFLinkAttributeName] copy];
+                    *stop = YES;
+                }
+            }
+        }
+    }];
+    
+    return link;
+
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

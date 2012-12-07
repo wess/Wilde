@@ -10,6 +10,13 @@
 #import <CoreText/CoreText.h>
 #import "Wilde.h"
 
+@interface ORFTestView()
+{
+    CTFramesetterRef _framesetter;
+    Wilde *attrString;
+}
+@end
+
 @implementation ORFTestView
 
 - (id)initWithFrame:(CGRect)frame
@@ -24,7 +31,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    Wilde *attrString = [Wilde new];
+    attrString                  = [Wilde new];
     attrString.font             = [UIFont boldSystemFontOfSize:16.0f];
     attrString.foregroundColor  = [UIColor redColor];
     attrString.linebreakMode    = NSLineBreakByWordWrapping;
@@ -33,35 +40,41 @@
     attrString.shadowColor      = [UIColor blueColor];
     attrString.shadowOffset     = CGSizeMake(0.0f, 4.0f);
     attrString.shadowRadius     = 4.0f;
-    attrString.alignment        = NSTextAlignmentCenter;
+    attrString.alignment        = NSTextAlignmentLeft;
     
-    [attrString appendStringWithFormat:@"This is a little String "];
-    [attrString appendImage:[UIImage imageNamed:@"09-chat-2"]];
+    [attrString appendStringWithFormat:@"<p>This is a <a href=\"http://www.google.com\">little</a> String</p>"];
     
     attrString.foregroundColor  = [UIColor purpleColor];
-    attrString.font             = [UIFont systemFontOfSize:40.0f];
+    attrString.font             = [UIFont systemFontOfSize:20.0f];
     attrString.underline        = NO;
-    [attrString appendStringWithFormat:@" Here is the end of said string    "];
+    [attrString appendStringWithFormat:@"Here is the <strong>end</strong> of said string<br>"];
     
     attrString.font             = [UIFont systemFontOfSize:12.0f];
     attrString.foregroundColor  = [UIColor greenColor];
-    [attrString appendImage:[UIImage imageNamed:@"92-test-tube"]];
-    [attrString appendStringWithFormat:@"  this is more text after the image"];
+    [attrString appendStringWithFormat:@"this is more text<br>after the image"];
 
-    [attrString appendStringWithFormat:@"Here is a view that is embedded "];
+    [attrString appendStringWithFormat:@"<p><em>Here is a view <br/>that is embedded</em></p>"];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 20.0f, 20.0f)];
-    view.backgroundColor = [UIColor orangeColor];
-    [self addSubview:view];
-
-    [attrString appendView:view];
-    [attrString appendStringWithFormat:@" some string format love %@", @"here"];
+    [attrString appendStringWithFormat:@"some string <b>format</b> love %@<br>", @"here"];
     
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString.attributedString);
-    [attrString drawAttributedStringWithFramesetter:framesetter inFrame:rect];
+    attrString.foregroundColor = [UIColor blackColor];
+    [attrString appendStringWithFormat:@"<ul><li> list item one</li><li> list item two</li><li> list <a href=\"mailto:you@me.com\">item</a> three</li></ul>"];
+    
+    
+    _framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString.attributedString);
+    [attrString drawAttributedStringWithFramesetter:_framesetter inFrame:rect];
     
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
 
+    NSString *link = [attrString urlStringForTextAtPoint:location];
+    if(link)
+        NSLog(@"LINK: %@", link);
+
+}
 
 @end
