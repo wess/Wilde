@@ -24,7 +24,13 @@
 		080021BF1663DEA200D18BD6 /* 09-chat-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021BD1663DEA200D18BD6 /* 09-chat-2@2x.png */; };
 		080021C21663E06600D18BD6 /* 92-test-tube.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021C01663E06600D18BD6 /* 92-test-tube.png */; };
 		080021C31663E06600D18BD6 /* 92-test-tube@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021C11663E06600D18BD6 /* 92-test-tube@2x.png */; };
-		082790DF16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 082790DE16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.m */; };
+		08212DC716765E05008EEA70 /* testing.css in Resources */ = {isa = PBXBuildFile; fileRef = 08212DC616765E05008EEA70 /* testing.css */; };
+		08212DF2167662F8008EEA70 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08212DF1167662F8008EEA70 /* libicucore.dylib */; };
+		08212E34167684AC008EEA70 /* CSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08212E23167684AC008EEA70 /* CSSParser.m */; };
+		08212E3A167684AC008EEA70 /* css.grammer in Resources */ = {isa = PBXBuildFile; fileRef = 08212E30167684AC008EEA70 /* css.grammer */; };
+		08212E3B167684AC008EEA70 /* css.m in Sources */ = {isa = PBXBuildFile; fileRef = 08212E32167684AC008EEA70 /* css.m */; };
+		08212E3C167684AC008EEA70 /* mcss.grammer in Resources */ = {isa = PBXBuildFile; fileRef = 08212E33167684AC008EEA70 /* mcss.grammer */; };
+		08212E4016768E9E008EEA70 /* UIColor+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 08212E3F16768E9E008EEA70 /* UIColor+CSS.m */; };
 		082790E116728EC500309D90 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 082790E016728EC500309D90 /* README.md */; };
 		082790E316729B4B00309D90 /* Wilde.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 082790E216729B4B00309D90 /* Wilde.podspec */; };
 		08CA84701670FD340031C9F7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CA846F1670FD340031C9F7 /* libxml2.dylib */; };
@@ -57,9 +63,17 @@
 		080021BD1663DEA200D18BD6 /* 09-chat-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-chat-2@2x.png"; sourceTree = "<group>"; };
 		080021C01663E06600D18BD6 /* 92-test-tube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "92-test-tube.png"; sourceTree = "<group>"; };
 		080021C11663E06600D18BD6 /* 92-test-tube@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "92-test-tube@2x.png"; sourceTree = "<group>"; };
-		082790DC16728BCC00309D90 /* Archimedes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Archimedes.h; path = Archimedes/Archimedes/Archimedes.h; sourceTree = SOURCE_ROOT; };
-		082790DD16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGGeometry+MEDConvenienceAdditions.h"; path = "Archimedes/Archimedes/CGGeometry+MEDConvenienceAdditions.h"; sourceTree = SOURCE_ROOT; };
-		082790DE16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CGGeometry+MEDConvenienceAdditions.m"; path = "Archimedes/Archimedes/CGGeometry+MEDConvenienceAdditions.m"; sourceTree = SOURCE_ROOT; };
+		08212DC616765E05008EEA70 /* testing.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = testing.css; sourceTree = "<group>"; };
+		08212DF1167662F8008EEA70 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		08212E22167684AC008EEA70 /* CSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSParser.h; sourceTree = "<group>"; };
+		08212E23167684AC008EEA70 /* CSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSParser.m; sourceTree = "<group>"; };
+		08212E2E167684AC008EEA70 /* CSSTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSTokens.h; sourceTree = "<group>"; };
+		08212E30167684AC008EEA70 /* css.grammer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = css.grammer; sourceTree = "<group>"; };
+		08212E31167684AC008EEA70 /* css.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = css.h; sourceTree = "<group>"; };
+		08212E32167684AC008EEA70 /* css.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = css.m; sourceTree = "<group>"; };
+		08212E33167684AC008EEA70 /* mcss.grammer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mcss.grammer; sourceTree = "<group>"; };
+		08212E3E16768E9E008EEA70 /* UIColor+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CSS.h"; sourceTree = "<group>"; };
+		08212E3F16768E9E008EEA70 /* UIColor+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CSS.m"; sourceTree = "<group>"; };
 		082790E016728EC500309D90 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		082790E216729B4B00309D90 /* Wilde.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Wilde.podspec; sourceTree = SOURCE_ROOT; };
 		08CA846F1670FD340031C9F7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -76,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08212DF2167662F8008EEA70 /* libicucore.dylib in Frameworks */,
 				08CA84701670FD340031C9F7 /* libxml2.dylib in Frameworks */,
 				080021AC1663C1EC00D18BD6 /* CoreText.framework in Frameworks */,
 				080021AD1663C1EC00D18BD6 /* QuartzCore.framework in Frameworks */,
@@ -108,6 +123,7 @@
 		0800218C1663C1C100D18BD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08212DF1167662F8008EEA70 /* libicucore.dylib */,
 				08CA846F1670FD340031C9F7 /* libxml2.dylib */,
 				080021AA1663C1EC00D18BD6 /* CoreText.framework */,
 				080021AB1663C1EC00D18BD6 /* QuartzCore.framework */,
@@ -145,6 +161,7 @@
 				0800219F1663C1C100D18BD6 /* Default.png */,
 				080021A11663C1C100D18BD6 /* Default@2x.png */,
 				080021A31663C1C100D18BD6 /* Default-568h@2x.png */,
+				08212DC616765E05008EEA70 /* testing.css */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -161,6 +178,7 @@
 		080021AF1663C24400D18BD6 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				08212E20167684AC008EEA70 /* CSSParser */,
 				08CA84721670FE810031C9F7 /* Submodules */,
 				080021B01663C2B100D18BD6 /* Wilde.h */,
 				080021B11663C2B100D18BD6 /* Wilde.m */,
@@ -177,20 +195,33 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		082790DB16728BBC00309D90 /* Archimedes */ = {
+		08212E20167684AC008EEA70 /* CSSParser */ = {
 			isa = PBXGroup;
 			children = (
-				082790DC16728BCC00309D90 /* Archimedes.h */,
-				082790DD16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.h */,
-				082790DE16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.m */,
+				08212E22167684AC008EEA70 /* CSSParser.h */,
+				08212E23167684AC008EEA70 /* CSSParser.m */,
+				08212E2E167684AC008EEA70 /* CSSTokens.h */,
+				08212E2F167684AC008EEA70 /* lex */,
+				08212E3E16768E9E008EEA70 /* UIColor+CSS.h */,
+				08212E3F16768E9E008EEA70 /* UIColor+CSS.m */,
 			);
-			name = Archimedes;
+			path = CSSParser;
+			sourceTree = "<group>";
+		};
+		08212E2F167684AC008EEA70 /* lex */ = {
+			isa = PBXGroup;
+			children = (
+				08212E30167684AC008EEA70 /* css.grammer */,
+				08212E31167684AC008EEA70 /* css.h */,
+				08212E32167684AC008EEA70 /* css.m */,
+				08212E33167684AC008EEA70 /* mcss.grammer */,
+			);
+			path = lex;
 			sourceTree = "<group>";
 		};
 		08CA84721670FE810031C9F7 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
-				082790DB16728BBC00309D90 /* Archimedes */,
 				08CA847C167121180031C9F7 /* hpple */,
 			);
 			name = Submodules;
@@ -271,6 +302,9 @@
 				080021C31663E06600D18BD6 /* 92-test-tube@2x.png in Resources */,
 				082790E116728EC500309D90 /* README.md in Resources */,
 				082790E316729B4B00309D90 /* Wilde.podspec in Resources */,
+				08212DC716765E05008EEA70 /* testing.css in Resources */,
+				08212E3A167684AC008EEA70 /* css.grammer in Resources */,
+				08212E3C167684AC008EEA70 /* mcss.grammer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +322,9 @@
 				08CA8483167121320031C9F7 /* TFHpple.m in Sources */,
 				08CA8484167121320031C9F7 /* TFHppleElement.m in Sources */,
 				08CA8485167121320031C9F7 /* XPathQuery.m in Sources */,
-				082790DF16728BCC00309D90 /* CGGeometry+MEDConvenienceAdditions.m in Sources */,
+				08212E34167684AC008EEA70 /* CSSParser.m in Sources */,
+				08212E3B167684AC008EEA70 /* css.m in Sources */,
+				08212E4016768E9E008EEA70 /* UIColor+CSS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +399,10 @@
 				GCC_PREFIX_HEADER = "Wilde/Wilde-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Wilde/Wilde-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -375,6 +415,10 @@
 				GCC_PREFIX_HEADER = "Wilde/Wilde-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Wilde/Wilde-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

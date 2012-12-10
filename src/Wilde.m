@@ -8,7 +8,7 @@
 
 #import "Wilde.h"
 #import "TFHpple.h"
-#import "Archimedes.h"
+#import "CSSParser.h"
 
 @implementation WildeLinkAttribute
 - (id)initWithText:(NSString *)text urlString:(NSString *)urlString andRange:(NSRange)range
@@ -97,9 +97,11 @@ static NSString *stringByStrippingHTML(NSString *string)
     CTFrameRef      _drawingFrameRef;
     NSDataDetector *_dataDetector;
 }
-@property (readwrite, nonatomic) CGRect drawingFrame;
-@property (strong, nonatomic) NSMutableDictionary *mutableLinks;
-@property (strong, nonatomic) NSMutableArray *lines;
+@property (readwrite, nonatomic) CGRect             drawingFrame;
+@property (strong, nonatomic) NSMutableDictionary   *mutableLinks;
+@property (strong, nonatomic) NSMutableArray        *lines;
+@property (strong, nonatomic) NSDictionary          *cssRules;
+
 - (NSAttributedString *)attributedStringByAppendingString:(NSString *)string;
 - (void)drawImagesForFrame:(CTFrameRef)frame;
 @end
@@ -135,6 +137,12 @@ static NSString *stringByStrippingHTML(NSString *string)
     return self;
 }
 
+- (void)setCssFile:(NSString *)cssFile
+{
+    _cssFile    = [cssFile copy];
+    _cssRules   = [CSSParser attributesForCSSFile:_cssFile];
+}
+
 - (NSDictionary *)attributes
 {
     NSShadow *shadow        = [[NSShadow alloc] init];
@@ -163,11 +171,11 @@ static NSString *stringByStrippingHTML(NSString *string)
     NSString *content                                   = [string copy];
     NSMutableAttributedString *mutableAttributedString  = [[NSMutableAttributedString alloc] initWithString:content attributes:self.attributes];
     TFHpple *doc                                        = [[TFHpple alloc] initWithHTMLData:[[[content copy] lowercaseString] dataUsingEncoding:NSUTF8StringEncoding]];
-    NSArray *elements                                   = [doc searchWithXPathQuery:@"//b | //strong | //i | //em | //ul | //li | //a"];
+    NSArray *elements                                   = [doc searchWithXPathQuery:@"//span | //p | //b | //strong | //i | //em | //ul | //li | //a"];
     
     [elements enumerateObjectsUsingBlock:^(TFHppleElement *element, NSUInteger idx, BOOL *stop) {
         NSString *tagName = [element.tagName lowercaseString];
-        
+
         if(element.text)
         {
             NSRange textRange = [[content lowercaseString] rangeOfString:[element.text lowercaseString]];
@@ -189,7 +197,21 @@ static NSString *stringByStrippingHTML(NSString *string)
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:textRange];
                 [mutableAttributedString addAttribute:kORFLinkAttributeName value:element.attributes[@"href"] range:textRange];
             }
+
+            if([element.attributes objectForKey:@"id"])
+            {
+                NSDictionary *elementAttributes = [self.cssRules objectForKey:[NSString stringWithFormat:@"#%@", [element.attributes objectForKey:@"id"]]];
+                NSLog(@"Attr: %@", elementAttributes);
+                [mutableAttributedString addAttributes:elementAttributes range:textRange];
+            }
+
+            if([element.attributes objectForKey:@"class"])
+            {
+                NSDictionary *elementAttributes = [self.cssRules objectForKey:[NSString stringWithFormat:@".%@", [element.attributes objectForKey:@"class"]]];
+                [mutableAttributedString addAttributes:elementAttributes range:textRange];
+            }
         }
+
     }];
 
     NSScanner *thescanner   = [NSScanner scannerWithString:mutableAttributedString.mutableString];
@@ -444,7 +466,7 @@ static NSString *stringByStrippingHTML(NSString *string)
             CGFloat yOffset = origins[lineIdx].y - descent;
             CGRect bounds   = CGRectMake(xOffset, yOffset, width, height);
   
-            bounds = CGRectInvert(frame, bounds);
+            bounds = CGRectMake(CGRectGetMinX(frame), CGRectGetHeight(bounds) - CGRectGetMaxY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
             
             [self.lines addObject:@{
                 @"Range": NSStringFromRange(NSMakeRange(runRange.location, runRange.length)),

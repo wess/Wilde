@@ -8,6 +8,7 @@
 
 #import "ORFAppDelegate.h"
 #import "ORFTestView.h"
+#import "Wilde.h"
 
 @implementation ORFAppDelegate
 
@@ -22,8 +23,9 @@
     UIViewController *controller = [[UIViewController alloc] initWithNibName:nil bundle:nil];
     [controller.view addSubview:testView];
     
-    self.window.rootViewController = controller;
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController  = controller;
+    self.window.backgroundColor     = [UIColor whiteColor];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -32,6 +32,7 @@
 - (void)drawRect:(CGRect)rect
 {
     attrString                  = [Wilde new];
+    attrString.cssFile          = @"testing.css";
     attrString.font             = [UIFont boldSystemFontOfSize:16.0f];
     attrString.foregroundColor  = [UIColor redColor];
     attrString.linebreakMode    = NSLineBreakByWordWrapping;
@@ -61,19 +62,18 @@
     
     attrString.foregroundColor = [UIColor blackColor];
     [attrString appendStringWithFormat:@"<ul><li> list item one</li><li> list item two</li><li> list <a href=\"mailto:you@me.com\">item</a> three</li></ul>"];
-    [attrString appendStringWithFormat:@"<p>Look ma, an email address! you@me.com"];
+    [attrString appendStringWithFormat:@"<p>Look <span id=\"testid\">ma</span>, an <span class=\"testclass\">email</span> address! you@me.com"];
     
     _framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString.attributedString);
     [attrString drawAttributedStringWithFramesetter:_framesetter inFrame:rect];
-    
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
+    UITouch *touch      = [touches anyObject];
+    CGPoint location    = [touch locationInView:self];
+    NSString *link      = [attrString urlStringForTextAtPoint:location];
 
-    NSString *link = [attrString urlStringForTextAtPoint:location];
     if(link)
         NSLog(@"LINK: %@", link);
 
