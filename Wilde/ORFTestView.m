@@ -41,6 +41,7 @@
     attrString.shadowOffset     = CGSizeMake(0.0f, 4.0f);
     attrString.shadowRadius     = 4.0f;
     attrString.alignment        = NSTextAlignmentLeft;
+    attrString.shouldDetectUrls = YES;
     
     [attrString appendStringWithFormat:@"<p>This is a <a href=\"http://www.google.com\">little</a> String</p>"];
     
@@ -51,15 +52,16 @@
     
     attrString.font             = [UIFont systemFontOfSize:12.0f];
     attrString.foregroundColor  = [UIColor greenColor];
-    [attrString appendStringWithFormat:@"this is more text<br>after the image"];
-
-    [attrString appendStringWithFormat:@"<p><em>Here is a view <br/>that is embedded</em></p>"];
+    
+    [attrString appendStringWithFormat:@"this is more text<br>after the image "];
+    [attrString appendImage:[UIImage imageNamed:@"92-test-tube"]];
+    [attrString appendStringWithFormat:@" <p><em>Here is a url, http://www.google.com, before the view <br/>that is embedded</em></p>"];
     
     [attrString appendStringWithFormat:@"some string <b>format</b> love %@<br>", @"here"];
     
     attrString.foregroundColor = [UIColor blackColor];
     [attrString appendStringWithFormat:@"<ul><li> list item one</li><li> list item two</li><li> list <a href=\"mailto:you@me.com\">item</a> three</li></ul>"];
-    
+    [attrString appendStringWithFormat:@"<p>Look ma, an email address! you@me.com"];
     
     _framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attrString.attributedString);
     [attrString drawAttributedStringWithFramesetter:_framesetter inFrame:rect];

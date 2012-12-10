@@ -45,6 +45,9 @@ static NSString *kORFLinkAttributeName  = @"kORFLineAttributeName";
 @property (nonatomic)           NSLineBreakMode             linebreakMode;
 @property (copy, nonatomic)     NSString                    *listBulletCharacter;
 @property (nonatomic)           NSInteger                    listItemIndent;
+@property (nonatomic)           BOOL                        shouldDetectUrls;
+@property (nonatomic)           BOOL                        shouldDetectPhoneNumbers;
+@property (nonatomic)           BOOL                        shouldDetectEmailAddresses;
 
 - (void)appendStringWithFormat:(NSString *)string, ...;
 - (void)appendImage:(UIImage *)image;

@@ -94,7 +94,8 @@ static NSString *stringByStrippingHTML(NSString *string)
 
 @interface Wilde()
 {
-    CTFrameRef _drawingFrameRef;
+    CTFrameRef      _drawingFrameRef;
+    NSDataDetector *_dataDetector;
 }
 @property (readwrite, nonatomic) CGRect drawingFrame;
 @property (strong, nonatomic) NSMutableDictionary *mutableLinks;
@@ -110,10 +111,11 @@ static NSString *stringByStrippingHTML(NSString *string)
     self = [super init];
     if(self)
     {
-        _drawingFrameRef    = NULL;
         self.mutableLinks   = [[NSMutableDictionary alloc] init];
         self.lines          = [[NSMutableArray alloc] init];
         
+        _dataDetector           = [[NSDataDetector alloc] initWithTypes:(NSTextCheckingTypePhoneNumber | NSTextCheckingTypeLink | NSTextCheckingTypeDate | NSTextCheckingTypeAddress) error:nil];
+        _drawingFrameRef        = NULL;
         _attributedString       = [[NSMutableAttributedString alloc] init];
         _paragraphStyle         = [[NSMutableParagraphStyle alloc] init];
         _font                   = [UIFont systemFontOfSize:12.0f];
@@ -206,6 +208,10 @@ static NSString *stringByStrippingHTML(NSString *string)
         {
             [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"\n" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
         }
+        else if([[text lowercaseString] rangeOfString:@"<p"].location != NSNotFound)
+        {
+            [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"\r" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];            
+        }
         else if([[text lowercaseString] rangeOfString:@"/p"].location != NSNotFound)
         {
             [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"\r\n" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
@@ -220,9 +226,31 @@ static NSString *stringByStrippingHTML(NSString *string)
         [mutableAttributedString.mutableString replaceOccurrencesOfString:replaceString withString:@"" options:0 range:NSMakeRange(0, mutableAttributedString.mutableString.length)];
     }
 
+    if(_shouldDetectEmailAddresses || _shouldDetectPhoneNumbers || _shouldDetectUrls)
+    {
+        [_dataDetector enumerateMatchesInString:mutableAttributedString.string options:0 range:NSMakeRange(0, mutableAttributedString.string.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+            NSRange textRange = result.range;
+            
+            switch (result.resultType)
+            {
+                case NSTextCheckingTypeLink:
+                {
+                    [mutableAttributedString addAttribute:NSUnderlineStyleAttributeName value:@(1) range:textRange];
+                    [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:textRange];
+                    [mutableAttributedString addAttribute:kORFLinkAttributeName value:[result URL] range:textRange];
+                }
+                break;
+                    
+                default:
+                    break;
+            }
+        }];
+    }
+    
     
     return [mutableAttributedString copy];
 }
+
 
 - (void)appendStringWithFormat:(NSString *)string, ...
 {
@@ -381,31 +409,25 @@ static NSString *stringByStrippingHTML(NSString *string)
     CGContextSaveGState(context);
     CGContextConcatCTM(context, CGAffineTransformMake(1.0f, 0.0f, 0.0f, -1.0f, 0.0f, (rect.origin.y + rect.size.height)));
 
-//    [self drawImagesForFrame:frameRef];
-//    [self drawViewsForFrame:frameRef];
-//
-//    
+    [self drawImagesForFrame:frameRef];
+    [self drawViewsForFrame:frameRef];
+
     CTFrameDraw(frameRef, context);
-//    CGContextRestoreGState(context);
-//    
-//    CFRelease(path);
-//    CFRelease(frameRef);
-//    
-//    self.drawingFrame = rect;
-//    _drawingFrameRef = frameRef;
 
     CGRect frameBoundingBox = CGPathGetBoundingBox(path);
-    CFArrayRef lines = CTFrameGetLines(frameRef);
+    CFArrayRef lines        = CTFrameGetLines(frameRef);
+
     CGPoint origins[CFArrayGetCount(lines)];                              // the origins of each line at the baseline
     CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
+    
     CFIndex linesCount = CFArrayGetCount(lines);
     
     for (int lineIdx = 0; lineIdx < linesCount; lineIdx++)
     {
         CGContextSetTextPosition(context, origins[lineIdx].x + frameBoundingBox.origin.x, frameBoundingBox.origin.y + origins[lineIdx].y);
 
-        CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, lineIdx);
-        CGRect lineBounds = CTLineGetImageBounds(line, context);
+        CTLineRef line      = (CTLineRef)CFArrayGetValueAtIndex(lines, lineIdx);
+        CGRect lineBounds   = CTLineGetImageBounds(line, context);
         
         lineBounds.origin.y = rect.size.height - origins[lineIdx].y - lineBounds.size.height;
         
@@ -422,10 +444,6 @@ static NSString *stringByStrippingHTML(NSString *string)
             CGFloat yOffset = origins[lineIdx].y - descent;
             CGRect bounds   = CGRectMake(xOffset, yOffset, width, height);
   
-//            UIColor *randomColor = [UIColor colorWithRed:((CGFloat)random()/(CGFloat)RAND_MAX) green:((CGFloat)random()/(CGFloat)RAND_MAX) blue:((CGFloat)random()/(CGFloat)RAND_MAX) alpha:1.0f];
-//            [randomColor set];
-//            UIRectFill(bounds);
-            
             bounds = CGRectInvert(frame, bounds);
             
             [self.lines addObject:@{
@@ -442,7 +460,7 @@ static NSString *stringByStrippingHTML(NSString *string)
 - (NSString *)urlStringForTextAtPoint:(CGPoint)point
 {
     __block NSString *link = nil;
-    
+
     [self.lines enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
         NSString *boundsString  = [item objectForKey:@"Bounds"];
         NSString *rangeString   = [item objectForKey:@"Range"];
@@ -457,7 +475,6 @@ static NSString *stringByStrippingHTML(NSString *string)
             for(int i = range.location; i < count; i++)
             {
                 NSDictionary *attributes    = [self.attributedString attributesAtIndex:i longestEffectiveRange:&longRange inRange:NSMakeRange(i, 1)];
-//                NSString *linkAttr          = [self.attributedString attribute:kORFLinkAttributeName atIndex:i effectiveRange:NULL];
 
                 if([attributes objectForKey:kORFLinkAttributeName])
                 {
