@@ -25,7 +25,6 @@
 		080021C21663E06600D18BD6 /* 92-test-tube.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021C01663E06600D18BD6 /* 92-test-tube.png */; };
 		080021C31663E06600D18BD6 /* 92-test-tube@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 080021C11663E06600D18BD6 /* 92-test-tube@2x.png */; };
 		08212DC716765E05008EEA70 /* testing.css in Resources */ = {isa = PBXBuildFile; fileRef = 08212DC616765E05008EEA70 /* testing.css */; };
-		08212DF2167662F8008EEA70 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08212DF1167662F8008EEA70 /* libicucore.dylib */; };
 		08212E34167684AC008EEA70 /* CSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 08212E23167684AC008EEA70 /* CSSParser.m */; };
 		08212E3A167684AC008EEA70 /* css.grammer in Resources */ = {isa = PBXBuildFile; fileRef = 08212E30167684AC008EEA70 /* css.grammer */; };
 		08212E3B167684AC008EEA70 /* css.m in Sources */ = {isa = PBXBuildFile; fileRef = 08212E32167684AC008EEA70 /* css.m */; };
@@ -90,7 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08212DF2167662F8008EEA70 /* libicucore.dylib in Frameworks */,
 				08CA84701670FD340031C9F7 /* libxml2.dylib in Frameworks */,
 				080021AC1663C1EC00D18BD6 /* CoreText.framework in Frameworks */,
 				080021AD1663C1EC00D18BD6 /* QuartzCore.framework in Frameworks */,
