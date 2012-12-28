@@ -9,6 +9,7 @@
 #import "Wilde.h"
 #import "TFHpple.h"
 #import "CSSParser.h"
+#import "Archimedes.h"
 
 @implementation WildeLinkAttribute
 - (id)initWithText:(NSString *)text urlString:(NSString *)urlString andRange:(NSRange)range
@@ -466,7 +467,7 @@ static NSString *stringByStrippingHTML(NSString *string)
             CGFloat yOffset = origins[lineIdx].y - descent;
             CGRect bounds   = CGRectMake(xOffset, yOffset, width, height);
   
-            bounds = CGRectMake(CGRectGetMinX(frame), CGRectGetHeight(bounds) - CGRectGetMaxY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+            bounds = CGRectInvert(frame, bounds);
             
             [self.lines addObject:@{
                 @"Range": NSStringFromRange(NSMakeRange(runRange.location, runRange.length)),

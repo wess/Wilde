@@ -32,6 +32,8 @@
 		08212E4016768E9E008EEA70 /* UIColor+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 08212E3F16768E9E008EEA70 /* UIColor+CSS.m */; };
 		082790E116728EC500309D90 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 082790E016728EC500309D90 /* README.md */; };
 		082790E316729B4B00309D90 /* Wilde.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 082790E216729B4B00309D90 /* Wilde.podspec */; };
+		08BC6E62168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6E5F168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.m */; };
+		08BC6E63168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BC6E61168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.m */; };
 		08CA84701670FD340031C9F7 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CA846F1670FD340031C9F7 /* libxml2.dylib */; };
 		08CA8483167121320031C9F7 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CA847E167121320031C9F7 /* TFHpple.m */; };
 		08CA8484167121320031C9F7 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CA8480167121320031C9F7 /* TFHppleElement.m */; };
@@ -75,6 +77,12 @@
 		08212E3F16768E9E008EEA70 /* UIColor+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CSS.m"; sourceTree = "<group>"; };
 		082790E016728EC500309D90 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		082790E216729B4B00309D90 /* Wilde.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Wilde.podspec; sourceTree = SOURCE_ROOT; };
+		08BC6E5C168DE11300AF6E63 /* Archimedes-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Archimedes-Prefix.pch"; sourceTree = "<group>"; };
+		08BC6E5D168DE11300AF6E63 /* Archimedes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archimedes.h; sourceTree = "<group>"; };
+		08BC6E5E168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CGGeometry+MEDConvenienceAdditions.h"; sourceTree = "<group>"; };
+		08BC6E5F168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CGGeometry+MEDConvenienceAdditions.m"; sourceTree = "<group>"; };
+		08BC6E60168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+MEDGeometryAdditions.h"; sourceTree = "<group>"; };
+		08BC6E61168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+MEDGeometryAdditions.m"; sourceTree = "<group>"; };
 		08CA846F1670FD340031C9F7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		08CA847D167121320031C9F7 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = hpple/TFHpple.h; sourceTree = SOURCE_ROOT; };
 		08CA847E167121320031C9F7 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = hpple/TFHpple.m; sourceTree = SOURCE_ROOT; };
@@ -107,6 +115,7 @@
 				080021931663C1C100D18BD6 /* Wilde */,
 				0800218C1663C1C100D18BD6 /* Frameworks */,
 				0800218A1663C1C100D18BD6 /* Products */,
+				08BC6E59168DE10500AF6E63 /* Submodules */,
 			);
 			sourceTree = "<group>";
 		};
@@ -217,6 +226,28 @@
 			path = lex;
 			sourceTree = "<group>";
 		};
+		08BC6E59168DE10500AF6E63 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				08BC6E5B168DE11300AF6E63 /* Archimedes */,
+			);
+			name = Submodules;
+			sourceTree = "<group>";
+		};
+		08BC6E5B168DE11300AF6E63 /* Archimedes */ = {
+			isa = PBXGroup;
+			children = (
+				08BC6E5C168DE11300AF6E63 /* Archimedes-Prefix.pch */,
+				08BC6E5D168DE11300AF6E63 /* Archimedes.h */,
+				08BC6E5E168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.h */,
+				08BC6E5F168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.m */,
+				08BC6E60168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.h */,
+				08BC6E61168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.m */,
+			);
+			name = Archimedes;
+			path = Archimedes/Archimedes;
+			sourceTree = "<group>";
+		};
 		08CA84721670FE810031C9F7 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +354,8 @@
 				08212E34167684AC008EEA70 /* CSSParser.m in Sources */,
 				08212E3B167684AC008EEA70 /* css.m in Sources */,
 				08212E4016768E9E008EEA70 /* UIColor+CSS.m in Sources */,
+				08BC6E62168DE11300AF6E63 /* CGGeometry+MEDConvenienceAdditions.m in Sources */,
+				08BC6E63168DE11300AF6E63 /* NSValue+MEDGeometryAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
