@@ -48,6 +48,7 @@ static NSString *kORFLinkAttributeName  = @"kORFLineAttributeName";
 @property (nonatomic)           BOOL                        shouldDetectUrls;
 @property (nonatomic)           BOOL                        shouldDetectPhoneNumbers;
 @property (nonatomic)           BOOL                        shouldDetectEmailAddresses;
+@property (assign)              BOOL                        canClickOnLinks;
 @property (nonatomic, copy)     NSString                    *cssFile;
 
 - (void)appendStringWithFormat:(NSString *)string, ...;

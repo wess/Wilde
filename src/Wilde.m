@@ -21,7 +21,6 @@
         _urlString  = [urlString copy];
         _url        = [NSURL URLWithString:_urlString];
         _textRange  = range;
-        
     }
     return self;
 }
@@ -134,6 +133,7 @@ static NSString *stringByStrippingHTML(NSString *string)
         _shadowRadius           = 0.0f;
         _listBulletCharacter    = kWildBulletCharacter;
         _listItemIndent         = 4;
+        _canClickOnLinks        = YES;
     }
     return self;
 }
@@ -189,10 +189,10 @@ static NSString *stringByStrippingHTML(NSString *string)
             {
                 [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:self.italicFont.fontName size:self.font.pointSize] range:textRange];
             }
-            else if([tagName isEqualToString:@"a"])
+            else if([tagName isEqualToString:@"a"] && _canClickOnLinks)
             {
                 WildeLinkAttribute *linkAttribute = [WildeLinkAttribute createLinkWithText:element.text urlString:element.attributes[@"href"] andRange:textRange];
-                [self.mutableLinks setObject:linkAttribute forKey:element.text];
+                [self.mutableLinks setObject:linkAttribute forKey:element.raw];
                 
                 [mutableAttributedString addAttribute:NSUnderlineStyleAttributeName value:@(1) range:textRange];
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:textRange];
