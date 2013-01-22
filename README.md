@@ -147,7 +147,7 @@ Read LICENSE file for more info.
 
 
 ## Special Thanks:
-* Thanks to Jeremy Tregunna for helping with CoreText for a while now, and proof reading all the things.
+* Thanks to [Jeremy Tregunna](https://github.com/jeremytregunna) for helping with CoreText for a while now, and proof reading all the things.
 * Thanks to Erica Sadun for writing awesome books and helping me out with getting CoreText under control.
 
 ## To-do: (Just starting development, much more to come)
